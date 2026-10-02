@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<title>YBS Yangon</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:#f5f7fb;
+ color:#172033;
+ font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Myanmar",Arial,sans-serif;
+}
+
+.header{
+ background:#0b1220;
+ color:white;
+ padding:30px 20px 38px;
+ border-radius:0 0 28px 28px;
+}
+
+.header h1{
+ margin:0;
+ font-size:30px;
+}
+
+.header p{
+ margin:7px 0 0;
+ opacity:.75;
+}
+
+.container{
+ max-width:650px;
+ margin:-20px auto 0;
+ padding:0 16px 40px;
+}
+
+.card{
+ background:white;
+ border-radius:22px;
+ padding:20px;
+ box-shadow:0 8px 30px rgba(0,0,0,.08);
+}
+
+label{
+ display:block;
+ font-size:13px;
+ color:#687386;
+ margin:5px 0 7px;
+}
+
+input{
+ width:100%;
+ padding:15px;
+ border:1px solid #dce2eb;
+ border-radius:13px;
+ font-size:16px;
+ margin-bottom:14px;
+ outline:none;
+}
+
+input:focus{
+ border-color:#1769ff;
+}
+
+.search{
+ width:100%;
+ padding:16px;
+ border:0;
+ border-radius:14px;
+ background:#1769ff;
+ color:white;
+ font-size:16px;
+ font-weight:bold;
+}
+
+.quick{
+ display:flex;
+ gap:8px;
+ margin-top:12px;
+ overflow-x:auto;
+}
+
+.quick button{
+ border:0;
+ border-radius:12px;
+ padding:10px 14px;
+ background:#edf3ff;
+ color:#1769ff;
+ white-space:nowrap;
+}
+
+.result{
+ margin-top:15px;
+ border:1px solid #e1e6ef;
+ border-radius:17px;
+ padding:16px;
+}
+
+.bus{
+ font-size:23px;
+ font-weight:800;
+}
+
+.info{
+ color:#687386;
+ font-size:14px;
+ margin-top:5px;
+}
+
+.stop{
+ padding:10px 4px;
+ border-bottom:1px solid #eef1f5;
+ font-size:15px;
+}
+
+.stop:last-child{
+ border-bottom:0;
+}
+
+.board{
+ color:#159447;
+ font-weight:bold;
+}
+
+.exit{
+ color:#d82c2c;
+ font-weight:bold;
+}
+
+.empty{
+ text-align:center;
+ color:#687386;
+ padding:20px 5px;
+}
+
+.footer{
+ text-align:center;
+ color:#9aa3b2;
+ font-size:12px;
+ margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+ <h1>YBS Yangon</h1>
+ <p>ဘယ်ကနေ → ဘယ်ကို သွားမလဲ?</p>
+</div>
+
+<div class="container">
+
+ <div class="card">
+
+  <label>စတင်မည့်နေရာ</label>
+  <input id="from" placeholder="ဥပမာ — လှည်းတန်း">
+
+  <label>သွားမည့်နေရာ</label>
+  <input id="to" placeholder="ဥပမာ — ဗိုလ်တထောင်ဘုရား">
+
+  <button class="search" onclick="searchBus()">
+   ဘတ်စ်ကားရှာမယ်
+  </button>
+
+  <div class="quick">
+   <button onclick="demo145()">YBS 145</button>
+   <button onclick="demo65()">YBS 65</button>
+   <button onclick="demo1()">YBS 1</button>
+  </div>
+
+  <div id="results"></div>
+
+ </div>
+
+ <div class="footer">
+  YBS Yangon • Prototype
+ </div>
+
+</div>
+
+<script>
+
+const routes = {
+
+"145":[
+"၁၄၅ဂိတ်",
+"ရဲအကြပ်သင်တန်းကျောင်း",
+"လှော်ကားတာဆုံ",
+"ကျောင်းရှေ့(လှော်ကား)",
+"ဂိတ်ဟောင်း(လှော်ကား)",
+"ဈေးသံလမ်း",
+"ဘုရားလေး",
+"ဂျိုကာ",
+"လှော်ကားအောက်ဂိတ်",
+"မိုးဆန်း",
+"တရုံးရှေ့",
+"အိမ်မဲကြီး",
+"အောင်မေတ္တာ",
+"အောင်ချမ်းသာ",
+"ဏဈေး(အောင်သုခ)",
+"ငြိမ်းချမ်းရေး",
+"အမိုးကြီး",
+"၁ဂိတ်",
+"စောင်စက်ရုံ(၂)",
+"ဖော့ကန်ဈေး",
+"ဂျပန်လမ်း",
+"ပြည်တော်သာ",
+"သရက်တော",
+"ဘိုကုန်း",
+"ဟိုက်ပက်",
+"မညက",
+"အင်းစိန်ဆေးရုံ",
+"အင်းစိန်ပန်းခြံ",
+"သံလမ်း",
+"သုခလမ်း",
+"ဘူတာရုံလမ်း",
+"ဆင်ရေတွင်း",
+"စံရိပ်ငြိမ်",
+"လှည်းတန်း",
+"စိုက်ပျိုးရေး",
+"ဟံသာဝတီအဝိုင်း",
+"မဟာမြိုင်",
+"မြေနီကုန်း",
+"လင့်လမ်း",
+"အုတ်လမ်း",
+"ယုဇနပလာဇာ",
+"မင်္ဂလာဈေး",
+"ပုဇွန်တောင်စာတိုက်",
+"ပုဇွန်တောင်ဈေး",
+"၅၀ကွေ့",
+"ဆီဆိုင်",
+"ဗိုလ်တထောင်ဘုရား"
+],
+
+"65":[
+"၆၅ဂိတ်",
+"သိမ်းချောင်း",
+"ရွှေပြည်သာလိန်ကုန်း",
+"ကွက်သစ်",
+"ဒဒွေး",
+"လှော်ကားအောက်ဂိတ်",
+"မိုးဆန်း",
+"တရုံးရှေ့",
+"အင်းစိန်ဆေးရုံ",
+"အင်းစိန်ပန်းခြံ",
+"သံလမ်း",
+"လှည်းတန်း",
+"မြေနီကုန်း",
+"မင်္ဂလာဈေး",
+"ဗိုလ်တထောင်ဘုရား"
+],
+
+"1":[
+"လှည်းကူးဈေး",
+"လှည်းကူး",
+"တံတားကြီး",
+"ပဲခူးလမ်း",
+"သင်္ဃန်းကျွန်း",
+"ဇဝန"
+]
+
+};
+
+
+function demo145(){
+
+ document.getElementById("from").value="လှည်းတန်း";
+ document.getElementById("to").value="ဗိုလ်တထောင်ဘုရား";
+
+ searchBus();
+
+}
+
+
+function demo65(){
+
+ document.getElementById("from").value="လှည်းတန်း";
+ document.getElementById("to").value="ဗိုလ်တထောင်ဘုရား";
+
+ searchBus();
+
+}
+
+
+function demo1(){
+
+ document.getElementById("from").value="လှည်းကူးဈေး";
+ document.getElementById("to").value="ဇဝန";
+
+ searchBus();
+
+}
+
+
+function searchBus(){
+
+ const from=document.getElementById("from").value.trim();
+ const to=document.getElementById("to").value.trim();
+
+ const results=document.getElementById("results");
+
+ if(!from || !to){
+
+  results.innerHTML=
+  '<div class="empty">စတင်မည့်နေရာနဲ့ သွားမည့်နေရာကို ထည့်ပေးပါ။</div>';
+
+  return;
+
+ }
+
+ let found=[];
+
+ for(const number in routes){
+
+  const stops=routes[number];
+
+  const start=findStop(stops,from);
+  const end=findStop(stops,to);
+
+  if(start>=0 && end>start){
+
+   found.push({
+    number:number,
+    stops:stops,
+    start:start,
+    end:end
+   });
+
+  }
+
+ }
+
+ if(found.length===0){
+
+  results.innerHTML=
+  '<div class="empty">ဒီနေရာနှစ်ခုအတွက် တိုက်ရိုက် YBS မတွေ့သေးပါ။<br><br>နောက်ပိုင်း Database အပြည့်နဲ့ Transfer Route တွေပါ ရှာပေးနိုင်အောင် တိုးချဲ့မယ်။</div>';
+
+  return;
+
+ }
+
+ results.innerHTML=found.map(route=>{
+
+  const count=route.end-route.start;
+
+  let list="";
+
+  for(let i=route.start;i<=route.end;i++){
+
+   let cls="";
+   let text="";
+
+   if(i===route.start){
+
+    cls="board";
+    text="🟢 တက်ရန်";
+
+   }else if(i===route.end){
+
+    cls="exit";
+    text="🔴 ဆင်းရန်";
+
+   }else{
+
+    text="•";
+
+   }
+
+   list+=
+   '<div class="stop '+cls+'">'+
+   text+' '+route.stops[i]+
+   '</div>';
+
+  }
+
+  return `
+   <div class="result">
+
+    <div class="bus">
+     YBS ${route.number}
+    </div>
+
+    <div class="info">
+     ${count} မှတ်တိုင် • တိုက်ရိုက်ခရီး
+    </div>
+
+    <div style="margin-top:12px">
+     ${list}
+    </div>
+
+   </div>
+  `;
+
+ }).join("");
+
+}
+
+
+function findStop(stops,search){
+
+ const s=search.toLowerCase();
+
+ return stops.findIndex(stop=>
+  stop.toLowerCase().includes(s)
+ );
+
+}
+
+</script>
+
+</body>
+</html>
