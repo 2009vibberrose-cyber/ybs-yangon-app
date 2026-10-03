@@ -2,185 +2,251 @@
 <html lang="my">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0b1220">
 <title>YBS Yangon</title>
 
 <style>
 *{box-sizing:border-box}
-
 body{
- margin:0;
- background:#f5f7fb;
- color:#172033;
- font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Myanmar",Arial,sans-serif;
+  margin:0;
+  background:#f3f6fa;
+  color:#172033;
+  font-family:-apple-system,BlinkMacSystemFont,"Noto Sans Myanmar",
+  "Myanmar Text",Arial,sans-serif;
 }
+.app{max-width:720px;margin:auto;min-height:100vh}
 
 .header{
- background:#0b1220;
- color:white;
- padding:30px 20px 38px;
- border-radius:0 0 28px 28px;
+  background:#0b1220;
+  color:white;
+  padding:28px 20px 30px;
+  border-radius:0 0 28px 28px;
 }
+.header h1{margin:0;font-size:29px}
+.header p{margin:7px 0 0;opacity:.72;font-size:14px}
 
-.header h1{
- margin:0;
- font-size:30px;
-}
-
-.header p{
- margin:7px 0 0;
- opacity:.75;
-}
-
-.container{
- max-width:650px;
- margin:-20px auto 0;
- padding:0 16px 40px;
+.badge{
+  display:inline-block;
+  margin-bottom:12px;
+  padding:5px 10px;
+  border-radius:20px;
+  background:#ffffff18;
+  font-size:11px;
 }
 
 .card{
- background:white;
- border-radius:22px;
- padding:20px;
- box-shadow:0 8px 30px rgba(0,0,0,.08);
+  background:white;
+  margin:18px 14px;
+  padding:18px;
+  border-radius:20px;
+  box-shadow:0 6px 25px #17203312;
 }
 
-label{
- display:block;
- font-size:13px;
- color:#687386;
- margin:5px 0 7px;
+.label{
+  font-size:13px;
+  color:#687386;
+  margin-bottom:7px;
 }
 
-input{
- width:100%;
- padding:15px;
- border:1px solid #dce2eb;
- border-radius:13px;
- font-size:16px;
- margin-bottom:14px;
- outline:none;
+.input{
+  width:100%;
+  border:1px solid #dce2ea;
+  border-radius:14px;
+  padding:14px;
+  font-size:16px;
+  outline:none;
+  margin-bottom:11px;
+  background:#fafbfd;
 }
 
-input:focus{
- border-color:#1769ff;
+.input:focus{border-color:#2477ff;background:white}
+
+.swap{
+  text-align:center;
+  margin:-2px 0 9px;
+}
+
+.swap button{
+  border:0;
+  background:#eef4ff;
+  color:#2477ff;
+  border-radius:50%;
+  width:38px;height:38px;
+  font-size:19px;
 }
 
 .search{
- width:100%;
- padding:16px;
- border:0;
- border-radius:14px;
- background:#1769ff;
- color:white;
- font-size:16px;
- font-weight:bold;
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  background:#1769e0;
+  color:white;
+  font-size:16px;
+  font-weight:700;
+}
+
+.quick-title{
+  font-size:13px;
+  color:#687386;
+  margin-bottom:10px;
 }
 
 .quick{
- display:flex;
- gap:8px;
- margin-top:12px;
- overflow-x:auto;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
 }
 
 .quick button{
- border:0;
- border-radius:12px;
- padding:10px 14px;
- background:#edf3ff;
- color:#1769ff;
- white-space:nowrap;
+  border:1px solid #dce2ea;
+  background:white;
+  border-radius:12px;
+  padding:9px 13px;
+  font-weight:600;
 }
 
 .result{
- margin-top:15px;
- border:1px solid #e1e6ef;
- border-radius:17px;
- padding:16px;
+  border:1px solid #e1e6ee;
+  border-radius:16px;
+  padding:15px;
+  margin-top:12px;
 }
 
 .bus{
- font-size:23px;
- font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:10px;
 }
 
-.info{
- color:#687386;
- font-size:14px;
- margin-top:5px;
+.busno{
+  background:#0b1220;
+  color:white;
+  border-radius:10px;
+  padding:7px 10px;
+  font-weight:800;
+}
+
+.direction{
+  font-size:14px;
+  font-weight:700;
+}
+
+.meta{
+  color:#687386;
+  font-size:13px;
+  margin:9px 0;
+}
+
+.detail{
+  width:100%;
+  border:0;
+  background:#eef4ff;
+  color:#1769e0;
+  padding:11px;
+  border-radius:11px;
+  font-weight:700;
+}
+
+.stops{
+  display:none;
+  margin-top:12px;
+  border-top:1px solid #edf0f4;
+  padding-top:10px;
 }
 
 .stop{
- padding:10px 4px;
- border-bottom:1px solid #eef1f5;
- font-size:15px;
-}
-
-.stop:last-child{
- border-bottom:0;
+  padding:7px 0;
+  font-size:13px;
 }
 
 .board{
- color:#159447;
- font-weight:bold;
+  color:#16834b;
+  font-weight:700;
 }
 
-.exit{
- color:#d82c2c;
- font-weight:bold;
+.alight{
+  color:#d13b3b;
+  font-weight:700;
 }
 
 .empty{
- text-align:center;
- color:#687386;
- padding:20px 5px;
+  text-align:center;
+  padding:25px 8px;
+  color:#687386;
 }
 
 .footer{
- text-align:center;
- color:#9aa3b2;
- font-size:12px;
- margin-top:20px;
+  text-align:center;
+  color:#8b94a3;
+  font-size:11px;
+  padding:20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">
- <h1>YBS Yangon</h1>
- <p>ဘယ်ကနေ → ဘယ်ကို သွားမလဲ?</p>
-</div>
+<div class="app">
 
-<div class="container">
+<header class="header">
+  <span class="badge">YBS YANGON • BETA</span>
+  <h1>ဘယ်ကနေ → ဘယ်ကို သွားမလဲ?</h1>
+  <p>သွားမယ့်နေရာထည့်ပြီး YBS ကားရှာပါ</p>
+</header>
 
- <div class="card">
+<section class="card">
 
-  <label>စတင်မည့်နေရာ</label>
-  <input id="from" placeholder="ဥပမာ — လှည်းတန်း">
+  <div class="label">စတင်မည့်နေရာ</div>
+  <input id="from"
+    class="input"
+    placeholder="ဥပမာ — လှည်းတန်း"
+    autocomplete="off">
 
-  <label>သွားမည့်နေရာ</label>
-  <input id="to" placeholder="ဥပမာ — ဗိုလ်တထောင်ဘုရား">
-
-  <button class="search" onclick="searchBus()">
-   ဘတ်စ်ကားရှာမယ်
-  </button>
-
-  <div class="quick">
-   <button onclick="demo145()">YBS 145</button>
-   <button onclick="demo65()">YBS 65</button>
-   <button onclick="demo1()">YBS 1</button>
+  <div class="swap">
+    <button onclick="swapPlace()">↕</button>
   </div>
 
-  <div id="results"></div>
+  <div class="label">သွားမည့်နေရာ</div>
+  <input id="to"
+    class="input"
+    placeholder="ဥပမာ — ဗိုလ်တထောင်ဘုရား"
+    autocomplete="off">
 
- </div>
+  <button class="search" onclick="searchBus()">
+    🚌 ဘတ်စ်ကားရှာမယ်
+  </button>
 
- <div class="footer">
-  YBS Yangon • Prototype
- </div>
+</section>
+
+<section class="card">
+
+  <div class="quick-title">အမြန်စမ်းကြည့်ရန်</div>
+
+  <div class="quick">
+    <button onclick="quickRoute('145')">YBS 145</button>
+    <button onclick="quickRoute('65')">YBS 65</button>
+    <button onclick="quickRoute('1')">YBS 1</button>
+  </div>
+
+</section>
+
+<section class="card">
+
+  <div class="quick-title">ရှာဖွေမှုရလဒ်</div>
+
+  <div id="results">
+    <div class="empty">
+      စတင်မည့်နေရာနဲ့ သွားမည့်နေရာကို ထည့်ပါ
+    </div>
+  </div>
+
+</section>
+
+<div class="footer">
+  YBS Yangon Beta • Route data is being continuously verified
+</div>
 
 </div>
 
@@ -188,229 +254,220 @@ input:focus{
 
 const routes = {
 
-"145":[
+"145":{
+ name:"145",
+ start:"၁၄၅ဂိတ်",
+ end:"ဗိုလ်တထောင်ဘုရား",
+ stops:[
 "၁၄၅ဂိတ်",
 "ရဲအကြပ်သင်တန်းကျောင်း",
 "လှော်ကားတာဆုံ",
 "ကျောင်းရှေ့(လှော်ကား)",
 "ဂိတ်ဟောင်း(လှော်ကား)",
 "ဈေးသံလမ်း",
-"ဘုရားလေး",
-"ဂျိုကာ",
-"လှော်ကားအောက်ဂိတ်",
-"မိုးဆန်း",
-"တရုံးရှေ့",
-"အိမ်မဲကြီး",
-"အောင်မေတ္တာ",
-"အောင်ချမ်းသာ",
-"ဏဈေး(အောင်သုခ)",
-"ငြိမ်းချမ်းရေး",
-"အမိုးကြီး",
-"၁ဂိတ်",
-"စောင်စက်ရုံ(၂)",
-"ဖော့ကန်ဈေး",
-"ဂျပန်လမ်း",
-"ပြည်တော်သာ",
-"သရက်တော",
-"ဘိုကုန်း",
-"ဟိုက်ပက်",
-"မညက",
-"အင်းစိန်ဆေးရုံ",
+"လှော်ကား",
 "အင်းစိန်ပန်းခြံ",
-"သံလမ်း",
-"သုခလမ်း",
-"ဘူတာရုံလမ်း",
-"ဆင်ရေတွင်း",
-"စံရိပ်ငြိမ်",
+"အင်းစိန်ပန်းခြံလမ်းဆုံ",
 "လှည်းတန်း",
-"စိုက်ပျိုးရေး",
-"ဟံသာဝတီအဝိုင်း",
-"မဟာမြိုင်",
 "မြေနီကုန်း",
-"လင့်လမ်း",
-"အုတ်လမ်း",
-"ယုဇနပလာဇာ",
+"ရွှေဂုံတိုင်",
+"တာမွေ",
 "မင်္ဂလာဈေး",
-"ပုဇွန်တောင်စာတိုက်",
-"ပုဇွန်တောင်ဈေး",
-"၅၀ကွေ့",
-"ဆီဆိုင်",
+"ဗိုလ်ချုပ်ဈေး",
+"ဆူးလေ",
 "ဗိုလ်တထောင်ဘုရား"
-],
+]
+},
 
-"65":[
+"65":{
+ name:"65",
+ start:"၆၅ဂိတ်",
+ end:"ဗိုလ်တထောင်ဘုရား",
+ stops:[
 "၆၅ဂိတ်",
 "သိမ်းချောင်း",
 "ရွှေပြည်သာလိန်ကုန်း",
 "ကွက်သစ်",
 "ဒဒွေး",
 "လှော်ကားအောက်ဂိတ်",
-"မိုးဆန်း",
-"တရုံးရှေ့",
-"အင်းစိန်ဆေးရုံ",
-"အင်းစိန်ပန်းခြံ",
-"သံလမ်း",
+"အင်းစိန်",
 "လှည်းတန်း",
 "မြေနီကုန်း",
+"ရွှေဂုံတိုင်",
+"တာမွေ",
 "မင်္ဂလာဈေး",
-"ဗိုလ်တထောင်ဘုရား"
-],
+"ဆူးလေ",
+"ဗိုလ်တထောင်"
+]
+},
 
-"1":[
+"1":{
+ name:"1",
+ start:"လှည်းကူးဈေး",
+ end:"ဇဝန",
+ stops:[
 "လှည်းကူးဈေး",
 "လှည်းကူး",
-"တံတားကြီး",
-"ပဲခူးလမ်း",
-"သင်္ဃန်းကျွန်း",
+"မှော်ဘီ",
+"မြောက်ဥက္ကလာ",
+"အင်းစိန်",
 "ဇဝန"
 ]
+}
 
 };
 
-
-function demo145(){
-
- document.getElementById("from").value="လှည်းတန်း";
- document.getElementById("to").value="ဗိုလ်တထောင်ဘုရား";
-
- searchBus();
-
+function clean(text){
+ return String(text||"")
+  .toLowerCase()
+  .replace(/\s+/g,"")
+  .replace(/[-–—]/g,"");
 }
 
-
-function demo65(){
-
- document.getElementById("from").value="လှည်းတန်း";
- document.getElementById("to").value="ဗိုလ်တထောင်ဘုရား";
-
- searchBus();
-
+function containsStop(route,text){
+ const q=clean(text);
+ return route.stops.some(s=>clean(s).includes(q));
 }
 
-
-function demo1(){
-
- document.getElementById("from").value="လှည်းကူးဈေး";
- document.getElementById("to").value="ဇဝန";
-
- searchBus();
-
+function findIndex(route,text){
+ const q=clean(text);
+ return route.stops.findIndex(s=>clean(s).includes(q));
 }
-
 
 function searchBus(){
 
  const from=document.getElementById("from").value.trim();
  const to=document.getElementById("to").value.trim();
-
- const results=document.getElementById("results");
+ const box=document.getElementById("results");
 
  if(!from || !to){
-
-  results.innerHTML=
-  '<div class="empty">စတင်မည့်နေရာနဲ့ သွားမည့်နေရာကို ထည့်ပေးပါ။</div>';
-
-  return;
-
+   box.innerHTML='<div class="empty">စတင်မည့်နေရာနဲ့ သွားမည့်နေရာ နှစ်ခုလုံးထည့်ပါ</div>';
+   return;
  }
 
- let found=[];
+ const matches=[];
 
- for(const number in routes){
+ Object.values(routes).forEach(route=>{
 
-  const stops=routes[number];
+   const a=findIndex(route,from);
+   const b=findIndex(route,to);
 
-  const start=findStop(stops,from);
-  const end=findStop(stops,to);
-
-  if(start>=0 && end>start){
-
-   found.push({
-    number:number,
-    stops:stops,
-    start:start,
-    end:end
-   });
-
-  }
-
- }
-
- if(found.length===0){
-
-  results.innerHTML=
-  '<div class="empty">ဒီနေရာနှစ်ခုအတွက် တိုက်ရိုက် YBS မတွေ့သေးပါ။<br><br>နောက်ပိုင်း Database အပြည့်နဲ့ Transfer Route တွေပါ ရှာပေးနိုင်အောင် တိုးချဲ့မယ်။</div>';
-
-  return;
-
- }
-
- results.innerHTML=found.map(route=>{
-
-  const count=route.end-route.start;
-
-  let list="";
-
-  for(let i=route.start;i<=route.end;i++){
-
-   let cls="";
-   let text="";
-
-   if(i===route.start){
-
-    cls="board";
-    text="🟢 တက်ရန်";
-
-   }else if(i===route.end){
-
-    cls="exit";
-    text="🔴 ဆင်းရန်";
-
-   }else{
-
-    text="•";
-
+   if(a>=0 && b>=0 && a<b){
+     matches.push({
+       route:route,
+       fromIndex:a,
+       toIndex:b
+     });
    }
 
-   list+=
-   '<div class="stop '+cls+'">'+
-   text+' '+route.stops[i]+
-   '</div>';
+ });
 
-  }
+ if(!matches.length){
 
-  return `
+   box.innerHTML=`
+   <div class="empty">
+     ဒီလမ်းကြောင်းအတွက် တိုက်ရိုက် YBS မတွေ့သေးပါ။<br><br>
+     နောက်ပိုင်း version မှာ <b>ပြောင်းစီးရမည့် YBS</b> တွေကိုပါ ရှာပေးနိုင်အောင်
+     transfer routing ထည့်သွားမယ်။
+   </div>`;
+
+   return;
+ }
+
+ box.innerHTML=matches.map((x,i)=>{
+
+   const count=x.toIndex-x.fromIndex;
+
+   return `
    <div class="result">
 
-    <div class="bus">
-     YBS ${route.number}
-    </div>
+     <div class="bus">
+       <span class="busno">YBS ${x.route.name}</span>
+       <span class="direction">
+         ${x.route.stops[x.fromIndex]}
+         → ${x.route.stops[x.toIndex]}
+       </span>
+     </div>
 
-    <div class="info">
-     ${count} မှတ်တိုင် • တိုက်ရိုက်ခရီး
-    </div>
+     <div class="meta">
+       🚏 ခန့်မှန်း ${count} မှတ်တိုင်
+     </div>
 
-    <div style="margin-top:12px">
-     ${list}
-    </div>
+     <button class="detail" onclick="showStops(${i})">
+       မှတ်တိုင်လမ်းကြောင်းကြည့်မယ်
+     </button>
 
-   </div>
-  `;
+     <div id="stops-${i}" class="stops">
+       ${x.route.stops
+         .slice(x.fromIndex,x.toIndex+1)
+         .map((s,n)=>{
 
+           let cls="";
+           let label="";
+
+           if(n===0){
+             cls="board";
+             label="  ← ဒီမှာတက်";
+           }
+
+           if(n===x.toIndex-x.fromIndex){
+             cls="alight";
+             label="  ← ဒီမှာဆင်း";
+           }
+
+           return `
+           <div class="stop ${cls}">
+             ${n+1}. ${s}${label}
+           </div>`;
+
+         }).join("")}
+     </div>
+
+   </div>`;
  }).join("");
 
+ window.searchResults=matches;
 }
 
+function showStops(i){
 
-function findStop(stops,search){
+ const el=document.getElementById("stops-"+i);
 
- const s=search.toLowerCase();
+ if(!el)return;
 
- return stops.findIndex(stop=>
-  stop.toLowerCase().includes(s)
- );
-
+ el.style.display =
+   el.style.display==="block" ? "none" : "block";
 }
+
+function quickRoute(number){
+
+ const r=routes[number];
+
+ if(!r)return;
+
+ document.getElementById("from").value=r.start;
+ document.getElementById("to").value=r.end;
+
+ searchBus();
+}
+
+function swapPlace(){
+
+ const a=document.getElementById("from");
+ const b=document.getElementById("to");
+
+ const temp=a.value;
+ a.value=b.value;
+ b.value=temp;
+}
+
+document.getElementById("from").addEventListener("keydown",e=>{
+ if(e.key==="Enter")searchBus();
+});
+
+document.getElementById("to").addEventListener("keydown",e=>{
+ if(e.key==="Enter")searchBus();
+});
 
 </script>
 
